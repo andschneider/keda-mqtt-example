@@ -1,0 +1,18 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: mqtt-scaledobject
+  namespace: mqtt
+spec:
+  scaleTargetRef:
+    name: mqtt-sub-deployment
+  pollingInterval: 5 # Optional. Default: 30 seconds
+  cooldownPeriod: 30 # Optional. Default: 300 seconds
+  maxReplicaCount: 30 # Optional. Default: 100
+  triggers:
+    - type: mqtt
+      metadata:
+        host: mosquitto-service.mqtt.svc.cluster.local:1883
+        topic: keda-mqtt-example
+        present: "true"
+        desiredReplicas: "2"

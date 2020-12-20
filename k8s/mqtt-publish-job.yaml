@@ -2,15 +2,16 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "mqtt-pub-job"
+  name: mqtt-pub-job
+  namespace: mqtt
 spec:
   template:
     metadata:
       labels:
-        app: "mqtt-pub-job"
+        app: mqtt-pub-job
     spec:
       containers:
-        - name: "mqtt-pub-job"
+        - name: mqtt-pub-job
           image: andschneider/keda-mqtt-example:v0.0.2
           args: [ "-topic", "keda-mqtt-example", "-pub", "-count", "100" ]
           imagePullPolicy: IfNotPresent

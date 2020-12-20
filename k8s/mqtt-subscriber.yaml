@@ -2,22 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "mqtt-sub-deployment"
+  name: mqtt-sub-deployment
+  namespace: mqtt
 spec:
   selector:
     matchLabels:
-      app: "mqtt-sub"
+      app: mqtt-sub
   replicas: 1
   template:
     metadata:
       labels:
-        app: "mqtt-sub"
+        app: mqtt-sub
     spec:
       containers:
-        - name: "mqtt-sub"
+        - name: mqtt-sub
           image: andschneider/keda-mqtt-example:v0.0.2
           args: [ "-topic", "keda-mqtt-example" ]
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           env:
             - name: HOST_URL
-              value: tcp://mosquitto-service:1883
+              value: mosquitto-service:1883
