@@ -21,6 +21,11 @@ func config(host string, publish bool) mqtt.Client {
 		cid = fmt.Sprintf("%s-%d", "sub", os.Getpid())
 	}
 
+	// read in environment variables, overriding command flags
+	h := os.Getenv("HOST_URL")
+	if h != "" {
+		host = h
+	}
 	// configure client
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(host)

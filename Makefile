@@ -11,3 +11,13 @@ build: main.go
 clean:
 	rm bin/keda-mqtt
 
+VERSION=0.0.2
+IMAGE=andschneider/keda-mqtt-example:v$(VERSION)
+
+build-docker:
+	docker build -t $(IMAGE) .
+
+push-docker: build-docker
+	docker push $(IMAGE)
+
+.PHONY: build-docker

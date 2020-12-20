@@ -1,0 +1,20 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "mqtt-pub-job"
+spec:
+  template:
+    metadata:
+      labels:
+        app: "mqtt-pub-job"
+    spec:
+      containers:
+        - name: "mqtt-pub-job"
+          image: andschneider/keda-mqtt-example:v0.0.2
+          args: [ "-topic", "keda-mqtt-example", "-pub", "-count", "100" ]
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: HOST_URL
+              value: tcp://mosquitto-service:1883
+      restartPolicy: Never
