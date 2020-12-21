@@ -1,0 +1,21 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mqtt-clear-retain
+  namespace: mqtt
+spec:
+  template:
+    metadata:
+      labels:
+        app: mqtt-clear-retain
+    spec:
+      containers:
+        - name: mqtt-clear-retain
+          image: andschneider/keda-mqtt-example:v0.0.2
+          args: [ "-topic", "keda-mqtt-example", "-clear" ]
+          imagePullPolicy: Always
+          env:
+            - name: HOST_URL
+              value: tcp://mosquitto-service:1883
+      restartPolicy: Never
